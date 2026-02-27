@@ -1,4 +1,5 @@
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
 
 struct ShakeDetectorModifier: ViewModifier {
@@ -88,3 +89,4 @@ public enum Config {
         }
     }
 }
+#endif

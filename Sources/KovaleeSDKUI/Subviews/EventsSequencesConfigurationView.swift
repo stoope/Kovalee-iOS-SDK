@@ -1,6 +1,7 @@
 import KovaleeSDK
 import SwiftUI
 
+#if canImport(UIKit)
 @available(iOS 16.0, *)
 struct EventsSequencesConfigurationView: View {
     enum FocusedField {
@@ -123,3 +124,4 @@ struct EventsSequencesConfigurationView: View {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
 }
+#endif

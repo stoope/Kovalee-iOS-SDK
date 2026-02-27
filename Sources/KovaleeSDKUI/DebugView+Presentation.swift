@@ -1,5 +1,6 @@
 import SwiftUI
 
+#if canImport(UIKit)
 /// To integrate ``DebugView`` into your SwiftUI-based projects you should use the view modifier ``showDebugConsoleOnShake()``.
 /// This method ensures that the debug console is only presented in debug builds or TestFlight builds.
 ///
@@ -60,3 +61,4 @@ public extension UIViewController {
         present(debugVC, animated: true, completion: nil)
     }
 }
+#endif

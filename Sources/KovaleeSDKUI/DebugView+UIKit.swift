@@ -1,4 +1,5 @@
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
 
 /// ``DebugViewController`` is a UIKit wrapper around the SwiftUI ``DebugView``.
@@ -54,3 +55,4 @@ public class DebugViewController: UIViewController {
         debugVC.didMove(toParent: self)
     }
 }
+#endif

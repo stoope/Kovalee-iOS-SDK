@@ -123,7 +123,7 @@ extension Target.Dependency {
     }
 
     static var ui: Self {
-        .target(name: .sdkUI)
+        .target(name: .sdkUI, condition: .when(platforms: [.iOS]))
     }
 
     static var survey: Self {

@@ -1,6 +1,7 @@
 import KovaleeSDK
 import SwiftUI
 
+#if canImport(UIKit)
 /// `DebugView` is designed to display and interact with the information collected by the SDK.
 ///
 /// Use `DebugView` to present critical debugging information such as:
@@ -253,3 +254,4 @@ extension DebugView {
         Kovalee.shared.kovaleeManager?.deepLinkParsingErrorValue()
     }
 }
+#endif

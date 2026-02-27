@@ -1,5 +1,6 @@
 import SwiftUI
 
+#if canImport(UIKit)
 struct InfoLabel: View {
     var title: String
     var value: String
@@ -37,3 +38,4 @@ struct InfoLabel: View {
         }
     }
 }
+#endif

@@ -1,6 +1,7 @@
 import KovaleeSDK
 import SwiftUI
 
+#if canImport(UIKit)
 @available(iOS 16.0, *)
 struct ABTestView: View {
     enum FocusedField {
@@ -25,3 +26,4 @@ struct ABTestView: View {
         .buttonStyle(.borderedProminent)
     }
 }
+#endif

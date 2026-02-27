@@ -1,3 +1,4 @@
+#if canImport(AdjustSdk)
 import AdjustSdk
 import AdSupport
 import AppTrackingTransparency
@@ -120,3 +121,4 @@ extension KovaleeFramework.LogLevel {
         }
     }
 }
+#endif
