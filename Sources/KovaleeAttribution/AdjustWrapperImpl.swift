@@ -39,7 +39,7 @@ final class AdjustWrapperImpl: NSObject, AttributionManager, Manager {
         self.configuration = configuration
         super.init()
 
-    #if canImport(AdjustSdk)
+        #if canImport(AdjustSdk)
             let adjustConfig = ADJConfig(
                 appToken: configuration.token,
                 environment: configuration.environment.adjustEnvironment
@@ -49,32 +49,34 @@ final class AdjustWrapperImpl: NSObject, AttributionManager, Manager {
             adjustConfig?.delegate = self
 
             Adjust.initSdk(adjustConfig)
-    #endif
+        #endif
     }
 
     func setDataCollectionEnabled(_ enabled: Bool) {
-    #if canImport(AdjustSdk)
+        #if canImport(AdjustSdk)
             guard let value = ADJThirdPartySharing(isEnabled: enabled ? 1 : 0) else {
                 return
             }
             Adjust.trackThirdPartySharing(value)
-    #endif
+        #endif
     }
 
     func getAttributionAdid() async -> String? {
-    #if canImport(AdjustSdk)
+        #if canImport(AdjustSdk)
             await Adjust.adid()
-    #endif
+        #else
+            return nil
+        #endif
     }
 
     func promptTrackingAuthorization(completion: @escaping (ATTrackingManager.AuthorizationStatus) -> Void) {
-    #if canImport(AdjustSdk)
+        #if canImport(AdjustSdk)
             Adjust.requestAppTrackingAuthorization { _ in
                 completion(ATTrackingManager.trackingAuthorizationStatus)
             }
-    #else
+        #else
             ATTrackingManager.requestTrackingAuthorization(completionHandler: completion)
-    #endif
+        #endif
     }
 
     func sendConversionValue(value: Int, coarseValue: String?, completion: @escaping (Error?) -> Void) {
