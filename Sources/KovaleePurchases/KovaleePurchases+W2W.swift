@@ -1,7 +1,11 @@
 import KovaleeFramework
 import KovaleeSDK
 import SwiftUI
-import UIKit
+#if canImport(UIKit)
+    import UIKit
+#elseif canImport(AppKit)
+    import AppKit
+#else
 
 // MARK: - Web2Web
 
@@ -126,7 +130,7 @@ public extension Kovalee {
     /// ```
     static func checkWebUserFromClipboard() async throws -> Bool {
         guard
-            let clipboardUserId = UIPasteboard.general.string,
+            let clipboardUserId = clipboardString(),
             clipboardUserId.range(of: "^[a-f0-9\\-]{36}$", options: .regularExpression) != nil
         else {
             return false
@@ -147,20 +151,35 @@ public extension Kovalee {
     }
 
     fileprivate static func readPasteboardLookingForDeeplink() -> URL? {
-        // We only want to read the pasteboard on the first app launch.
-        guard Kovalee.appOpeningCount() <= 1 else { return nil }
+        #if canImport(UIKit)
+                // We only want to read the pasteboard on the first app launch.
+                guard Kovalee.appOpeningCount() <= 1 else { return nil }
 
-        // We rely on the LinkMe feature from Adjust, which places a URL in the pasteboard when the user taps the download link.
-        guard UIPasteboard.general.hasURLs else { return nil }
+                // We rely on the LinkMe feature from Adjust, which places a URL in the pasteboard when the user taps the download link.
+                guard UIPasteboard.general.hasURLs else { return nil }
 
-        // This displays a dialog asking the user whether they want to allow the app to read the pasteboard.
-        guard let clipboardUrl = UIPasteboard.general.url else { return nil }
-        UIPasteboard.general.url = nil // Clear the pasteboard to avoid re-reading it in the future.
-        return clipboardUrl
+                // This displays a dialog asking the user whether they want to allow the app to read the pasteboard.
+                guard let clipboardUrl = UIPasteboard.general.url else { return nil }
+                UIPasteboard.general.url = nil // Clear the pasteboard to avoid re-reading it in the future.
+                return clipboardUrl
+        #elseif canImport(AppKit)
+            guard let clipboardString = NSPasteboard.general.string(forType: .string) else { return nil }
+            return URL(string: clipboardString)
+        #else
+            return nil
+        #endif
     }
 
+    private static func clipboardString() -> String? {
+        #if canImport(UIKit)
+            UIPasteboard.general.string
+        #elseif canImport(AppKit)
+            NSPasteboard.general.string(forType: .string)
+        #else
+            nil
+        #endif
+    }
 }
-
 
 
 /// A `ViewModifier` that listens for deep link URLs and checks if a web user has an active premium status.
