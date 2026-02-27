@@ -9,12 +9,16 @@ import KovaleeSDK
 
 extension AdjustConfiguration.Environment {
     var adjustEnvironment: String {
-        switch self {
-        case .production:
-            return ADJEnvironmentProduction
-        default:
-            return ADJEnvironmentSandbox
-        }
+        #if canImport(AdjustSdk)
+            switch self {
+            case .production:
+                return ADJEnvironmentProduction
+            default:
+                return ADJEnvironmentSandbox
+            }
+        #else
+            return ""
+        #endif
     }
 }
 
