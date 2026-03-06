@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "KovaleeSDK",
     defaultLocalization: "en",
-    platforms: [.macOS(.v15), .iOS(.v15), .watchOS(.v11), .tvOS(.v18), .macCatalyst(.v15), .visionOS(.v2)],
+    platforms: [.macOS(.v11), .iOS(.v15), .watchOS(.v7), .tvOS(.v15), .macCatalyst(.v15), .visionOS(.v1)],
     products: [
         .library(
             name: .sdk,
